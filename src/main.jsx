@@ -18,17 +18,17 @@ const router = createBrowserRouter([
         element: <HomePage />,
         // http://localhost:5173/homepage
       },
-      {
-        path: "/newpost",
-        element: <NewPost />,
-        // http://localhost:5173/newpost
-      },
     ],
   },
   {
     path: "/signup",
     element: <SignupPage />,
     //http://localhost:5173/signup
+  },
+  {
+    path: "/newpost",
+    element: <NewPost />,
+    // http://localhost:5173/newpost
   },
   {
     path: "/login",

@@ -1,39 +1,37 @@
-import { FaDev, FaGoogle } from "react-icons/fa";
-import { FaApple } from "react-icons/fa";
-import { FaFacebookSquare } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
+import { useState } from "react";
+import { FaDev, FaApple, FaFacebookSquare, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+import { signUp } from "../signup";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupPage() {
+  const [showEmailSignup, setShowEmailSignup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  const handleEmailSignupClick = () => {
+    setShowEmailSignup(true);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch("/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      if (response.ok) {
-        alert("User created successfully");
-        navigate("/login");
-      } else {
-        alert("Error creating user");
-      }
-    } catch (error) {
-      console.error("There was an error creating the user!", error);
+
+    const result = await signUp(email, password);
+
+    if (result.success) {
+      setMessage(result.message);
+      navigate("/");
+    } else {
+      setMessage(result.message);
     }
   };
 
   return (
-    <body className="bg-white text-black">
+    <div className="bg-white text-black">
       <main className="box-content">
         <h1>Aqui va el signup</h1>
         <div className="flex flex-row justify-center">
@@ -49,7 +47,7 @@ export default function SignupPage() {
             DEV Community is a community of 2,035,460 amazing developers
           </h3>
         </div>
-        <div className="flex justify-center w-auto pt-3">
+        <div className="flex justify-center w-auto pt-2">
           <button className="flex w-1/4 justify-center items-center relative border border-neutral-300 text-black font-semibold text-xs py-2 px-4 rounded hover:bg-gray-200">
             <FaApple className="absolute left-4" style={{ fontSize: "20px" }} />
             Sign up with Apple
@@ -62,25 +60,6 @@ export default function SignupPage() {
               style={{ fontSize: "20px" }}
             />
             Sign up with Facebook
-          </button>
-        </div>
-        <div className="flex justify-center w-auto pt-2">
-          <button className="flex w-1/4 justify-center items-center relative border border-neutral-300 text-black font-semibold text-xs py-2 px-4 rounded hover:bg-gray-200">
-            <img
-              className="max-w-4 mr-56 absolute left-4"
-              src="src/images/forem.png"
-              alt="forem"
-            />
-            Sign up with Forem
-          </button>
-        </div>
-        <div className="flex justify-center w-auto pt-2">
-          <button className="flex w-1/4 justify-center items-center relative border border-neutral-300 text-black font-semibold text-xs py-2 px-4 rounded hover:bg-gray-200">
-            <FaGithub
-              className="absolute left-4"
-              style={{ fontSize: "20px" }}
-            />
-            Sign up with GitHub
           </button>
         </div>
         <div className="flex justify-center w-auto pt-2">
@@ -101,13 +80,43 @@ export default function SignupPage() {
             Sign up with Twitter (X)
           </button>
         </div>
-
         <div className="flex justify-center w-auto pt-2">
-          <button className="flex w-1/4 justify-center items-center relative border border-neutral-300 text-black font-semibold text-xs py-2 px-4 rounded hover:bg-gray-200">
+          <button
+            className="flex w-1/4 justify-center items-center relative border border-neutral-300 text-black font-semibold text-xs py-2 px-4 rounded hover:bg-gray-200"
+            onClick={handleEmailSignupClick}
+          >
             <MdEmail className="absolute left-4" style={{ fontSize: "20px" }} />
             Sign up with Email
           </button>
         </div>
+        {showEmailSignup && (
+          <div className="flex justify-center w-auto pt-5">
+            <form onSubmit={handleSubmit} className="flex flex-col w-1/4">
+              <label className="font-semibold text-sm pb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border border-neutral-300 rounded p-2 mb-3"
+                required
+              />
+              <label className="font-semibold text-sm pb-2">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="border border-neutral-300 rounded p-2 mb-3"
+                required
+              />
+              <button
+                type="submit"
+                className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
+              >
+                Sign Up
+              </button>
+            </form>
+          </div>
+        )}
 
         <div className="flex flex-row justify-center pt-5 pb-5">
           <div className="w-96">
@@ -134,6 +143,6 @@ export default function SignupPage() {
           </div>
         </div>
       </main>
-    </body>
+    </div>
   );
 }

@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { AuthContext } from "../AuthContext";
 import { FcHome } from "react-icons/fc";
 import { TbSquareRoundedPlusFilled } from "react-icons/tb";
 import { BsFillArchiveFill } from "react-icons/bs";
@@ -23,8 +25,13 @@ import { AiFillInstagram } from "react-icons/ai";
 import { FiTwitch } from "react-icons/fi";
 import { FaMastodon } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
+import Posts from "./Posts";
+import React from "react";
 
 export default function MainPage() {
+  //   const { isAuthenticated, login, logout } = useContext(AuthContext);
+  //   console.log('Authenticated:', isAuthenticated);
+
   return (
     <main className="bg-neutral-200 text-black mt-14">
       <div className="gap-6 grid grid-cols-6 mx-64">
@@ -444,6 +451,7 @@ export default function MainPage() {
               </div>
             </div>
           </div>
+          <Posts />
         </div>
 
         {/* RightPost */}

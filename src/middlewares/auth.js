@@ -1,4 +1,3 @@
-// auth.js
 export async function loginUser(email, password) {
   try {
     const response = await fetch("/api/login", {
@@ -11,8 +10,7 @@ export async function loginUser(email, password) {
 
     if (response.ok) {
       const data = await response.json();
-      localStorage.setItem("token", data.token);
-      return { success: true, message: "Login successful", token: data.token };
+      return { success: true, message: data.message };
     } else {
       throw new Error("Invalid credentials");
     }

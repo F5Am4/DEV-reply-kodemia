@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaSquareXTwitter } from "react-icons/fa6";
 // import { MdEmail } from "react-icons/md";
 
-import { loginUser } from "../auth"; // Importamos la función de login
+import { loginUser } from "../middlewares/auth";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { useState } from "react";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(""); // Definir el estado para message
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
