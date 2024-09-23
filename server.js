@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express(express.static(path.join(__dirname, "public")));
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 27017;
 
 //Middlewares
 app.use(
